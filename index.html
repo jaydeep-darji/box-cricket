@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7 STAR BOX CRICKET</title>
+    <!-- linking font awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header / Navbar -->
+    <header>
+    <nav class="navbar section-content" >
+        <a href="#" class="nav-logo">
+            <h2 class="logo-text">BCT</h2>
+        </a>
+        <ul class="nav-menu">
+            <button id="menu-close-button" class="fas fa-times"></button>
+            <li class="nav-item">
+                 <a href="#" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">About Us</a>
+           </li>
+            <li class="nav-item">
+                 <a href="#" class="nav-link">Schedule </a>
+            </li>
+            <li class="nav-item">
+                 <a href="#" class="nav-link">Payment</a>
+            </li>
+            <li class="nav-item">
+                 <a href="#" class="nav-link">Gallery</a>
+            </li>
+            <li class="nav-item">
+                 <a href="#" class="nav-link">Services</a>
+            </li>
+          
+        </ul>
+        <button id="menu-open-button" class="fas fa-bars"></button>
+    </nav>
+    </header>
+    <!-- hero body section  -->
+    <main>
+        <section class="hero-section">
+            <div class="section-content">
+                <div class="hero-details">
+                    <h2 class="title">Box Cricket</h2>
+                    <h3 class="subtitle">Don't just watch-play,score and celebrate!</h3>
+                    <p class="description">Small ground, big excitement! Play, compete, and celebrate the spirit of cricket in our electrifying box cricket tournament</p>
+                    <div class="buttons">
+                        <a href="SignUp_LogIn_Form.html" class="button Registration">Registration/Login</a>
+                        <a href="#" class="button contact-us">Contact Us</a>
+                    </div>
+                </div>
+                <div class="hero-image-wrapper">
+                    <img src="photos/main bat.png" alt="Hero" class="hero-image">
+                </div>
+            </div>
+        </section>
+        <!-- About Us -->
+         <section class="about-section">
+            <div class="section-content">
+                <div class="about-image-wrapper">
+                  <img src="photos/disscussion.png" alt="about" class="about-image">
+                <div class="about-details">
+                    <h2 class="section-title">About Us</h2>
+                    <p class="text">Welcome to the Box Cricket Tournament Booking System, your ultimate platform for organizing and managing box cricket tournaments effortlessly. Our system enables teams to register, schedule matches, and book slots with ease. Designed with a user-friendly interface, it ensures a seamless experience for both administrators and participants. With real-time updates, secure payment integration, and efficient match scheduling, we aim to simplify tournament management. Join us and experience hassle-free cricket tournament coordination like never before!</p>
+                    <div class="social-link-list">
+                        <a href="#" class="social-link"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fa-brands fa-x-twitter"></i></a>
+                    </div>
+                </div>
+                </div>
+            </div>
+         </section>
+         <!-- schedule data -->
+
+        <!-- Payment Section -->
+<section class="payment-section">
+    <div class="section-content">
+        <div class="payment-container">
+            <div class="payment-form" id="payment-form">
+                <h2 class="payment-title">Payment</h2>
+                <form action="#" onsubmit="processPayment(event)">
+                    <input type="text" placeholder="Enter your full name" required>
+                    <input type="email" placeholder="Enter your email" required>
+                    <input type="tel" placeholder="Enter your mobile number" required>
+                    
+                    <select id="duration" required onchange="handleDurationChange()">
+                        <option value="">Select Duration</option>
+                        <option value="1">1 Hour - ₹400</option>
+                        <option value="2">2 Hours - ₹700</option>
+                        <option value="3">3 Hours - ₹900</option>
+                    </select>
+
+                    <select id="timeSlot" required>
+                        <option value="">Select Time Slot</option>
+                    </select>
+                    
+                    <input type="text" id="amount" placeholder="Total Amount" readonly>
+                    <button type="submit" class="button payment-button">Proceed to Pay</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+         
+
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
