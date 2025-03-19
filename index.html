@@ -21,16 +21,13 @@
                  <a href="#" class="nav-link">Home</a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">About Us</a>
+                <a href="#about" class="nav-link">About Us</a>
            </li>
             <li class="nav-item">
-                 <a href="#" class="nav-link">Schedule </a>
+                 <a href="live.html" class="nav-link">Schedule </a>
             </li>
             <li class="nav-item">
-                 <a href="#" class="nav-link">Payment</a>
-            </li>
-            <li class="nav-item">
-                 <a href="#" class="nav-link">Gallery</a>
+                 <a href="#Book" class="nav-link">Book Now</a>
             </li>
             <li class="nav-item">
                  <a href="#" class="nav-link">Services</a>
@@ -48,9 +45,9 @@
                     <h2 class="title">Box Cricket</h2>
                     <h3 class="subtitle">Don't just watch-play,score and celebrate!</h3>
                     <p class="description">Small ground, big excitement! Play, compete, and celebrate the spirit of cricket in our electrifying box cricket tournament</p>
-                    <div class="buttons">
+                    <div class="buttons" style="width:450px;">
                         <a href="SignUp_LogIn_Form.html" class="button Registration">Registration/Login</a>
-                        <a href="#" class="button contact-us">Contact Us</a>
+                        <a href="contact.html" class="button contact-us">Contact Us</a>
                     </div>
                 </div>
                 <div class="hero-image-wrapper">
@@ -59,7 +56,7 @@
             </div>
         </section>
         <!-- About Us -->
-         <section class="about-section">
+         <section class="about-section" id="about">
             <div class="section-content">
                 <div class="about-image-wrapper">
                   <img src="photos/disscussion.png" alt="about" class="about-image">
@@ -78,35 +75,146 @@
          <!-- schedule data -->
 
         <!-- Payment Section -->
-<section class="payment-section">
-    <div class="section-content">
-        <div class="payment-container">
-            <div class="payment-form" id="payment-form">
-                <h2 class="payment-title">Payment</h2>
-                <form action="#" onsubmit="processPayment(event)">
-                    <input type="text" placeholder="Enter your full name" required>
-                    <input type="email" placeholder="Enter your email" required>
-                    <input type="tel" placeholder="Enter your mobile number" required>
-                    
-                    <select id="duration" required onchange="handleDurationChange()">
-                        <option value="">Select Duration</option>
-                        <option value="1">1 Hour - ₹400</option>
-                        <option value="2">2 Hours - ₹700</option>
-                        <option value="3">3 Hours - ₹900</option>
-                    </select>
-
-                    <select id="timeSlot" required>
-                        <option value="">Select Time Slot</option>
-                    </select>
-                    
-                    <input type="text" id="amount" placeholder="Total Amount" readonly>
-                    <button type="submit" class="button payment-button">Proceed to Pay</button>
-                </form>
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Booking System</title>
+            <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+            <link rel="stylesheet" href="styles.css">
+        </head>
+        <body>
+            <section class="payment-section" id="Book">
+                <div class="section-content">
+                    <div class="payment-container">
+                        <div class="payment-form" id="payment-form">
+                            <h2 class="payment-title">Book Now</h2>
+                            <form action="#" id="bookingForm">
+                                <div class="input-box">
+                                    <input type="text" id="username" placeholder="Username" required>
+                                    <i class='bx bxs-user'></i>
+                                </div>
+                                <div class="input-box">
+                                    <input type="text" id="mobile" placeholder="Mobile Number" required pattern="[0-9]{10}">
+                                    <i class='bx bxs-phone'></i>
+                                </div>
+                                <div class="input-box">
+                                    <input type="email" id="email" placeholder="Email" required>
+                                    <i class='bx bxs-envelope'></i>
+                                </div>
+                                
+                                <div class="select-box">
+                                    <select id="duration" required onchange="handleDurationChange()">
+                                        <option value="">Select Duration</option>
+                                        <option value="1">1 Hour - ₹400</option>
+                                        <option value="2">2 Hours - ₹700</option>
+                                        <option value="3">3 Hours - ₹900</option>
+                                    </select>
+                                    <i class='bx bxs-time'></i>
+                                </div>
+                                
+                                <div class="select-box">
+                                    <select id="timeSlot" required>
+                                        <option value="">Select Time Slot</option>
+                                    </select>
+                                    <i class='bx bxs-calendar'></i>
+                                </div>
+                                
+                                <div class="input-box">
+                                    <input type="text" id="amount" placeholder="Total Amount" readonly>
+                                    <i class='bx bx-rupee'></i>
+                                </div>
+                                
+                                <div class="payment-options">
+                                    <h3>Payment Method</h3>
+                                    <div class="payment-method-options">
+                                        <div class="payment-option">
+                                            <input type="radio" id="online" name="paymentMethod" value="online" checked>
+                                            <label for="online">Online Payment</label>
+                                        </div>
+                                        <div class="payment-option">
+                                            <input type="radio" id="offline" name="paymentMethod" value="offline">
+                                            <label for="offline">Pay at Venue</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div id="onlinePaymentDetails">
+                                    <div class="card-options">
+                                        <div class="card-type">
+                                            <input type="radio" id="credit" name="cardType" value="credit" checked>
+                                            <label for="credit">Credit Card</label>
+                                        </div>
+                                        <div class="card-type">
+                                            <input type="radio" id="debit" name="cardType" value="debit">
+                                            <label for="debit">Debit Card</label>
+                                        </div>
+                                        <div class="card-type">
+                                            <input type="radio" id="upi" name="cardType" value="upi">
+                                            <label for="upi">UPI</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="cardDetails">
+                                        <div class="input-box">
+                                            <input type="text" id="cardNumber" placeholder="Card Number" maxlength="16" pattern="[0-9]{16}">
+                                            <i class='bx bxs-credit-card'></i>
+                                        </div>
+                                        <div class="card-expiry-cvv">
+                                            <div class="input-box expiry">
+                                                <input type="text" id="expiry" placeholder="MM/YY" maxlength="5" pattern="[0-9]{2}/[0-9]{2}">
+                                                <i class='bx bxs-calendar'></i>
+                                            </div>
+                                            <div class="input-box cvv">
+                                                <input type="text" id="cvv" placeholder="CVV" maxlength="3" pattern="[0-9]{3}">
+                                                <i class='bx bxs-lock-alt'></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="upiDetails" style="display: none;">
+                                        <div class="input-box">
+                                            <input type="text" id="upiId" placeholder="UPI ID (example@upi)">
+                                            <i class='bx bx-id-card'></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <button type="submit" class="button payment-button" id="payButton">Proceed to Pay</button>
+                            </form>
+                        </div>
+                        
+                        <!-- Booking Confirmation Section -->
+                        <div class="booking-confirmation" id="booking-confirmation" style="display: none;">
+                            <div class="confirmation-content">
+                                <i class='bx bx-check-circle confirmation-icon'></i>
+                                <h2>Booking Confirmed!</h2>
+                                <div class="booking-details">
+                                    <p><strong>Booking ID:</strong> <span id="bookingId"></span></p>
+                                    <p><strong>Name:</strong> <span id="confirmName"></span></p>
+                                    <p><strong>Duration:</strong> <span id="confirmDuration"></span></p>
+                                    <p><strong>Time Slot:</strong> <span id="confirmTimeSlot"></span></p>
+                                    <p><strong>Amount:</strong> <span id="confirmAmount"></span></p>
+                                    <p><strong>Payment Method:</strong> <span id="confirmPayment"></span></p>
+                                </div>
+                                <p class="confirmation-message">A confirmation has been sent to your email and mobile number.</p>
+                                <button class="button" onclick="window.location.reload()">Book Another</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Loading Overlay -->
+            <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+                <div class="loader"></div>
+                <p>Processing payment...</p>
             </div>
-        </div>
-    </div>
-</section>
-         
+        
+            <script src="booking-script.js"></script>
+        </body>
+        </html>         
 
     </main>
     <script src="script.js"></script>

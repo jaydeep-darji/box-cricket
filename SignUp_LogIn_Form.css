@@ -50,9 +50,9 @@ form{ width: 100%; }
     align-items: center;
     color: #333;
     text-align: center;
-    padding: 40px;
+    padding: 30px;
     z-index: 1;
-    transition: .6s ease-in-out 1.2s, visibility 0s 1s;
+    transition: .4s ease-in-out 1.2s, visibility 0s 1s;
 }
 
     .container.active .form-box{ right: 50%; }
@@ -99,7 +99,7 @@ form{ width: 100%; }
 .btn{
     width: 100%;
     height: 48px;
-    background: #7494ec;
+    background:  rgba(61, 11, 110, 0.9);
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, .1);
     border: none;
@@ -136,7 +136,7 @@ form{ width: 100%; }
         left: -250%;
         width: 300%;
         height: 100%;
-        background: #7494ec;
+        background: rgba(61, 11, 110, 0.9);
         /* border: 2px solid red; */
         border-radius: 150px;
         z-index: 2;

@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Box Cricket Tournament Booking System</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #27ae60;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --available-color: #2ecc71;
+            --booked-color: #e74c3c;
+            --pending-color: #f39c12;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        nav {
+            background-color: var(--dark-color);
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        nav ul li {
+            padding: 15px 20px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .active {
+            color: var(--secondary-color) !important;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .sidebar {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sidebar h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+        }
+        
+        .filters {
+            margin-bottom: 20px;
+        }
+        
+        .filter-group {
+            margin-bottom: 15px;
+        }
+        
+        .filter-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .filter-group select,
+        .filter-group input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .team-registration {
+            margin-top: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
+            text-align: center;
+            margin-top: 10px;
+            width: 100%;
+        }
+        
+        .btn:hover {
+            background-color: #219653;
+            transform: translateY(-2px);
+        }
+        
+        .btn-accent {
+            background-color: var(--accent-color);
+        }
+        
+        .btn-accent:hover {
+            background-color: #c0392b;
+        }
+        
+        .schedule-container {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .date-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .schedule-header {
+            display: flex;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .time-column {
+            width: 100px;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .day-column {
+            flex: 1;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .schedule-grid {
+            display: flex;
+        }
+        
+        .time-slots {
+            width: 100px;
+        }
+        
+        .time-slot {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+        }
+        
+        .day-slots {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+        }
+        
+        .slot {
+            height: 60px;
+            border: 1px solid #ddd;
+            padding: 5px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .slot:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .available {
+            background-color: var(--available-color);
+            color: white;
+        }
+        
+        .booked {
+            background-color: var(--booked-color);
+            color: white;
+        }
+        
+        .pending {
+            background-color: var(--pending-color);
+            color: white;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .close {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .status-indicator {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 10px;
+        }
+        
+        .status-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            border-radius: 4px;
+        }
+        
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            color: var(--accent-color);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .pulse {
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            margin-right: 10px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                opacity: 0.5;
+                transform: scale(0.8);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+            100% {
+                opacity: 0.5;
+                transform: scale(0.8);
+            }
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+        }
+        
+        .toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Box Cricket Tournament</h1>
+            <p>Book your slots and manage your teams in real-time</p>
+        </header>
+        
+        <nav>
+            <ul>
+                <li><a href="#" class="active">Schedule</a></li>
+                <li><a href="#">My Bookings</a></li>
+                <li><a href="#">Teams</a></li>
+                <li><a href="#">Tournaments</a></li>
+                <li><a href="#">Results</a></li>
+            </ul>
+        </nav>
+        
+        <div class="dashboard">
+            <div class="sidebar">
+                <h3>Filters</h3>
+                <div class="filters">
+                    <div class="filter-group">
+                        <label for="venue">Venue</label>
+                        <select id="venue">
+                            <option value="">All Venues</option>
+                            <option value="venue1">Cricket Box Alpha</option>
+                            <option value="venue2">Cricket Box Beta</option>
+                            <option value="venue3">Cricket Box Gamma</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="date">Date</label>
+                        <input type="date" id="date">
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="status">Status</label>
+                        <select id="status">
+                            <option value="">All Statuses</option>
+                            <option value="available">Available</option>
+                            <option value="booked">Booked</option>
+                            <option value="pending">Pending</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn" id="applyFilters">Apply Filters</button>
+                </div>
+                
+                <div class="team-registration">
+                    <h3>Quick Actions</h3>
+                    <button class="btn" id="registerTeam">Register New Team</button>
+                    <button class="btn btn-accent" id="createTournament">Create Tournament</button>
+                </div>
+            </div>
+            
+            <div class="schedule-container">
+                <div class="live-indicator">
+                    <div class="pulse"></div>
+                    Live Schedule Updates
+                </div>
+                
+                <div class="status-indicator">
+                    <div class="status-item">
+                        <div class="status-color" style="background-color: var(--available-color)"></div>
+                        <span>Available</span>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-color" style="background-color: var(--booked-color)"></div>
+                        <span>Booked</span>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-color" style="background-color: var(--pending-color)"></div>
+                        <span>Pending</span>
+                    </div>
+                </div>
+                
+                <div class="date-navigation">
+                    <button class="btn" id="prevWeek">Previous Week</button>
+                    <h3 id="currentWeek">March 10 - 16, 2025</h3>
+                    <button class="btn" id="nextWeek">Next Week</button>
+                </div>
+                
+                <div class="schedule-header">
+                    <div class="time-column">Time</div>
+                    <div class="day-column">Mon</div>
+                    <div class="day-column">Tue</div>
+                    <div class="day-column">Wed</div>
+                    <div class="day-column">Thu</div>
+                    <div class="day-column">Fri</div>
+                    <div class="day-column">Sat</div>
+                    <div class="day-column">Sun</div>
+                </div>
+                
+                <div class="schedule-grid">
+                    <div class="time-slots" id="timeSlots">
+                        <!-- Time slots will be generated by JavaScript -->
+                    </div>
+                    
+                    <div class="day-slots" id="daySlots">
+                        <!-- Slots will be generated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="modalTitle">Book a Slot</h3>
+            <form id="bookingForm">
+                <div class="form-group">
+                    <label for="slotDate">Date</label>
+                    <input type="text" id="slotDate" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="slotTime">Time</label>
+                    <input type="text" id="slotTime" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="teamSelect">Select Team</label>
+                    <select id="teamSelect">
+                        <option value="">Select your team</option>
+                        <option value="team1">Thunderbolts</option>
+                        <option value="team2">Strikers</option>
+                        <option value="team3">Royal Challengers</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="opponents">Opponents</label>
+                    <select id="opponents">
+                        <option value="">Open Challenge (Anyone can accept)</option>
+                        <option value="team1">Thunderbolts</option>
+                        <option value="team2">Strikers</option>
+                        <option value="team3">Royal Challengers</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Confirm Booking</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Slot booked successfully!</div>
+    
+    <script>
+        // XMPP Connection Simulation
+        const xmppConnection = {
+            connected: false,
+            
+            connect: function() {
+                console.log("Connecting to XMPP server...");
+                // Simulate connection delay
+                setTimeout(() => {
+                    this.connected = true;
+                    console.log("Connected to XMPP server");
+                    // Subscribe to updates
+                    this.subscribeToUpdates();
+                }, 1000);
+            },
+            
+            subscribeToUpdates: function() {
+                console.log("Subscribed to schedule updates");
+                // Simulate receiving updates periodically
+                setInterval(() => {
+                    if (Math.random() > 0.7) {
+                        // Simulate receiving an update
+                        const randomDay = Math.floor(Math.random() * 7);
+                        const randomTime = Math.floor(Math.random() * 12);
+                        const randomStatus = Math.random() > 0.5 ? 'booked' : 'available';
+                        
+                        // Update the UI
+                        this.onUpdate({
+                            day: randomDay,
+                            timeSlot: randomTime,
+                            status: randomStatus,
+                            team: randomStatus === 'booked' ? 'Team ' + Math.floor(Math.random() * 10) : null
+                        });
+                    }
+                }, 10000); // Every 10 seconds
+            },
+            
+            onUpdate: function(data) {
+                // Find the slot and update it
+                const slotId = `slot-${data.day}-${data.timeSlot}`;
+                const slot = document.getElementById(slotId);
+                
+                if (slot) {
+                    // Remove existing classes
+                    slot.classList.remove('available', 'booked', 'pending');
+                    
+                    // Add new class
+                    slot.classList.add(data.status);
+                    
+                    // Update content
+                    if (data.status === 'booked') {
+                        slot.textContent = data.team || 'Booked';
+                    } else if (data.status === 'available') {
+                        slot.textContent = 'Available';
+                    } else {
+                        slot.textContent = 'Pending';
+                    }
+                    
+                    // Show toast notification for updates
+                    showToast(`Slot ${data.day + 1}/${data.timeSlot + 8}:00 is now ${data.status}`);
+                }
+            },
+            
+            sendBookingRequest: function(bookingData) {
+                console.log("Sending booking request to XMPP server:", bookingData);
+                
+                // Simulate server processing
+                setTimeout(() => {
+                    // 90% chance of success
+                    if (Math.random() < 0.9) {
+                        // Update the UI
+                        const slotId = `slot-${bookingData.day}-${bookingData.timeSlot}`;
+                        const slot = document.getElementById(slotId);
+                        
+                        if (slot) {
+                            slot.classList.remove('available', 'booked', 'pending');
+                            slot.classList.add('booked');
+                            slot.textContent = bookingData.team;
+                            
+                            showToast("Booking confirmed successfully!");
+                        }
+                    } else {
+                        showToast("Booking failed. Please try again.");
+                    }
+                }, 1500);
+            }
+        };
+        
+        // Initialize schedule
+        function initializeSchedule() {
+            // Generate time slots
+            const timeSlots = document.getElementById('timeSlots');
+            const daySlots = document.getElementById('daySlots');
+            
+            // Clear existing content
+            timeSlots.innerHTML = '';
+            daySlots.innerHTML = '';
+            
+            // Create time slots (8 AM to 8 PM)
+            for (let i = 8; i <= 20; i++) {
+                const timeSlot = document.createElement('div');
+                timeSlot.className = 'time-slot';
+                timeSlot.textContent = `${i}:00`;
+                timeSlots.appendChild(timeSlot);
+                
+                // Create day slots for each time slot
+                for (let j = 0; j < 7; j++) {
+                    const slot = document.createElement('div');
+                    slot.className = 'slot';
+                    slot.id = `slot-${j}-${i-8}`;
+                    
+                    // Randomly assign status for demonstration
+                    const random = Math.random();
+                    if (random < 0.6) {
+                        slot.classList.add('available');
+                        slot.textContent = 'Available';
+                    } else if (random < 0.9) {
+                        slot.classList.add('booked');
+                        slot.textContent = `Team ${Math.floor(Math.random() * 10) + 1}`;
+                    } else {
+                        slot.classList.add('pending');
+                        slot.textContent = 'Pending';
+                    }
+                    
+                    // Add event listener
+                    slot.addEventListener('click', () => openBookingModal(j, i));
+                    
+                    daySlots.appendChild(slot);
+                }
+            }
+        }
+        
+        // Booking modal functions
+        function openBookingModal(day, time) {
+            const modal = document.getElementById('bookingModal');
+            const slotDate = document.getElementById('slotDate');
+            const slotTime = document.getElementById('slotTime');
+            
+            // Calculate the date based on current week and day
+            const currentDate = new Date();
+            const startOfWeek = new Date(currentDate);
+            startOfWeek.setDate(currentDate.getDate() - currentDate.getDay() + 1); // Monday
+            
+            const bookingDate = new Date(startOfWeek);
+            bookingDate.setDate(startOfWeek.getDate() + day);
+            
+            slotDate.value = bookingDate.toDateString();
+            slotTime.value = `${time}:00 - ${time+1}:00`;
+            
+            // Store the slot info for booking
+            document.getElementById('bookingForm').dataset.day = day;
+            document.getElementById('bookingForm').dataset.timeSlot = time - 8;
+            
+            modal.style.display = 'block';
+        }
+        
+        // Show toast notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize schedule
+            initializeSchedule();
+            
+            // Connect to XMPP server
+            xmppConnection.connect();
+            
+            // Close modal when clicking the X
+            document.querySelector('.close').addEventListener('click', function() {
+                document.getElementById('bookingModal').style.display = 'none';
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target === document.getElementById('bookingModal')) {
+                    document.getElementById('bookingModal').style.display = 'none';
+                }
+            });
+            
+            // Handle booking form submission
+            document.getElementById('bookingForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const team = document.getElementById('teamSelect').value;
+                const opponents = document.getElementById('opponents').value;
+                
+                if (!team) {
+                    alert('Please select a team');
+                    return;
+                }
+                
+                // Get the slot info
+                const day = parseInt(this.dataset.day);
+                const timeSlot = parseInt(this.dataset.timeSlot);
+                
+                // Send booking request
+                xmppConnection.sendBookingRequest({
+                    day: day,
+                    timeSlot: timeSlot,
+                    team: document.getElementById('teamSelect').options[document.getElementById('teamSelect').selectedIndex].text,
+                    opponents: opponents ? document.getElementById('opponents').options[document.getElementById('opponents').selectedIndex].text : 'Open Challenge'
+                });
+                
+                // Close modal
+                document.getElementById('bookingModal').style.display = 'none';
+            });
+            
+            // Week navigation
+            document.getElementById('prevWeek').addEventListener('click', function() {
+                // For demo purposes, just re-initialize the schedule
+                initializeSchedule();
+                showToast('Previous week loaded');
+            });
+            
+            document.getElementById('nextWeek').addEventListener('click', function() {
+                // For demo purposes, just re-initialize the schedule
+                initializeSchedule();
+                showToast('Next week loaded');
+            });
+            
+            // Apply filters
+            document.getElementById('applyFilters').addEventListener('click', function() {
+                // For demo purposes, just re-initialize the schedule
+                initializeSchedule();
+                showToast('Filters applied');
+            });
+            
+            // Register team button
+            document.getElementById('registerTeam').addEventListener('click', function() {
+                showToast('Team registration form would open here');
+            });
+            
+            // Create tournament button
+            document.getElementById('createTournament').addEventListener('click', function() {
+                showToast('Tournament creation form would open here');
+            });
+        });
+    </script>
+</body>
+</html>
